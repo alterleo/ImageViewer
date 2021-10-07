@@ -15,14 +15,14 @@ class MainViewController: UIViewController {
     
     private lazy var presenter = MainPresenter(view: self)
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUi()
     }
     
     func setupUi() {
-        presenter.fetchData()
+        presenter.checkInternetAndLoadData()
         
         view.backgroundColor = .green
         view.addSubview(collectionView)
@@ -35,6 +35,7 @@ class MainViewController: UIViewController {
         
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.prefetchDataSource = self
         collectionView.register(CollectionCell.self, forCellWithReuseIdentifier: CollectionCell.cellId)
     }
 }
@@ -49,12 +50,14 @@ extension MainViewController: ViewControllerProtocol {
 
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return presenter.dogs.count
+        return presenter.coreDogs.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionCell.cellId, for: indexPath) as! CollectionCell
-        cell.configure(dog: presenter.dogs[indexPath.row])
+        let coreDog = presenter.coreDogs[indexPath.row]
+        
+        cell.configure(dogFilename: coreDog.value(forKey: "filename") as? String)
         
         return cell
     }
@@ -74,5 +77,25 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 20
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = DetailViewController()
+        let coreDog = presenter.coreDogs[indexPath.row]
+        vc.dog = (filename: coreDog.value(forKey: "filename") as? String,
+                  fileDate: coreDog.value(forKey: "fileDate") as? Date)
+        self.navigationController?.pushViewController(vc, animated: false)
+    }
+    
+}
 
+extension MainViewController: UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        if indexPaths.contains(where: isLoadingCell) {
+            presenter.fetchData()
+        }
+    }
+    
+    private func isLoadingCell(for indexPath: IndexPath) -> Bool {
+        return indexPath.row >= 16 - 1
+    }
 }

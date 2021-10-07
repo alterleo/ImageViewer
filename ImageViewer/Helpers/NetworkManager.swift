@@ -11,7 +11,7 @@ class NetworkManager {
     let shared = NetworkManager()
     private init() {}
     
-    static func fetchData(closure: @escaping (_: DogModelNetwork) -> Void) {
+    static func fetchData(closure: @escaping (_: DogModelNetwork?) -> Void) {
         
         let fullURL = "https://dog.ceo/api/breeds/image/random"
         let fullURLEncoded = fullURL.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
@@ -19,7 +19,12 @@ class NetworkManager {
         guard let url = URL(string: fullURLEncoded!) else { return }
         let session = URLSession.shared
         session.dataTask(with: url) { data, response, error in
-            guard let data = data else { return }
+            guard let httpResponse = response as? HTTPURLResponse,
+                  (200...299).contains(httpResponse.statusCode),
+                  let data = data else {
+                      closure(nil)
+                      return
+                  }
             
             do {
                 let decoder = JSONDecoder()
