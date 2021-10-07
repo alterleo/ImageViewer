@@ -19,6 +19,7 @@
 		FA52B8F7270DBB1000261F8E /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA52B8F6270DBB1000261F8E /* DetailViewController.swift */; };
 		FA52B8F9270DD51900261F8E /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA52B8F8270DD51800261F8E /* MainView.swift */; };
 		FA52B8FC270F1B4100261F8E /* ImageViewer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FA52B8FA270F1B4100261F8E /* ImageViewer.xcdatamodeld */; };
+		FA52B8FF270F434700261F8E /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA52B8FE270F434700261F8E /* UIView+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		FA52B8F6270DBB1000261F8E /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		FA52B8F8270DD51800261F8E /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		FA52B8FB270F1B4100261F8E /* ImageViewer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ImageViewer.xcdatamodel; sourceTree = "<group>"; };
+		FA52B8FE270F434700261F8E /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 			children = (
 				FA52B8ED270DA27F00261F8E /* NetworkManager.swift */,
 				FA52B8F3270DB03600261F8E /* UIImage+Extension.swift */,
+				FA52B8FE270F434700261F8E /* UIView+Extension.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -187,6 +190,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA52B8FF270F434700261F8E /* UIView+Extension.swift in Sources */,
 				FA52B8EE270DA27F00261F8E /* NetworkManager.swift in Sources */,
 				FA52B8F9270DD51900261F8E /* MainView.swift in Sources */,
 				FA52B8F4270DB03600261F8E /* UIImage+Extension.swift in Sources */,

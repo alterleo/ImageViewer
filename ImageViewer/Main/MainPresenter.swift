@@ -23,7 +23,10 @@ class MainPresenter {
     
     /// Проверим загрузку данных по сети с нашего API
     func checkInternetAndLoadData() {
+        view?.showActivityIndicator()
+        
         NetworkManager.fetchData() { [weak self] dog in
+            defer { self?.view?.hideActivityIndicator() }
             guard let self = self else { return }
             
             // связь есть? - обнуляем БД и запрашиваем порцию данных
@@ -76,7 +79,9 @@ class MainPresenter {
                 guard let self = self else { return }
                 
                 if let dog = dog {
-                    self.save(filename: dog.message)
+                    DispatchQueue.main.async {
+                        self.save(filename: dog.message)
+                    }
                 }
             }
         }

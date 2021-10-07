@@ -9,6 +9,8 @@ import UIKit
 
 protocol ViewControllerProtocol: AnyObject {
     func reloadData()
+    func showActivityIndicator()
+    func hideActivityIndicator()
 }
 
 class MainViewController: UIViewController {
@@ -43,6 +45,18 @@ class MainViewController: UIViewController {
 extension MainViewController: ViewControllerProtocol {
     func reloadData() {
         collectionView.reloadData()
+    }
+    
+    func showActivityIndicator() {
+        DispatchQueue.main.async {
+            self.view.startActivity(.whiteLarge)
+        }
+    }
+    
+    func hideActivityIndicator() {
+        DispatchQueue.main.async {
+            self.view.stopActivity()
+        }
     }
 }
 
